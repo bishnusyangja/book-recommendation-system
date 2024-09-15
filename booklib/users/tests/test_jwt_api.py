@@ -10,7 +10,7 @@ PASSWD = 'random_string@$&123'
 
 class APITokenTestCase(TestCase):
     client = APIClient()
-    url = '/api/token/'
+    url = '/login/'
     email = EMAIL
     password = PASSWD
 
@@ -29,7 +29,7 @@ class APITokenTestCase(TestCase):
 
 class RefreshTokenTestCase(TestCase):
     client = APIClient()
-    token_url = '/api/token/'
+    token_url = '/login/'
     url = '/api/token/refresh/'
     email = EMAIL
     password = PASSWD

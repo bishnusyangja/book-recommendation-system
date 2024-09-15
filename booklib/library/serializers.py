@@ -3,6 +3,7 @@ from library.models import Book, Author
 
 
 class BookSerializer(serializers.ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', read_only=True)
     modified_on = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', read_only=True)
     published_on = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', read_only=True)
@@ -13,6 +14,7 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class AuthorSerializer(serializers.ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', read_only=True)
     modified_on = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', read_only=True)
 
