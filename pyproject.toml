@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "book-recommendation-system"
+version = "0.1.0"
+description = ""
+authors = ["Bishnu Bhattarai <bishnusyangja@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^5.1.1"
+djangorestframework = "^3.15.2"
+djangorestframework-simplejwt = "^5.3.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
