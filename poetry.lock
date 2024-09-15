@@ -62,6 +62,21 @@ python-jose = ["python-jose (==3.3.0)"]
 crypto = ["cryptography (>=3.3.1)"]
 
 [[package]]
+name = "model-bakery"
+version = "1.19.5"
+description = "Smart object creation facility for Django."
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+django = ">=4.2"
+
+[package.extras]
+docs = ["myst-parser", "sphinx", "sphinx-rtd-theme"]
+test = ["black", "coverage", "mypy", "pillow", "pytest", "pytest-django", "ruff"]
+
+[[package]]
 name = "pyjwt"
 version = "2.9.0"
 description = "JSON Web Token implementation in Python"
@@ -106,13 +121,14 @@ python-versions = ">=2"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "a17c976e61c04b00d3f13fb2d7ad187a35bcb11c8ec72010e4d654874ea2ef5c"
+content-hash = "74bd5994194b0c78b3b4dda01c03b370d3fce952f1698decba399badeb3c49ef"
 
 [metadata.files]
 asgiref = []
 django = []
 djangorestframework = []
 djangorestframework-simplejwt = []
+model-bakery = []
 pyjwt = []
 sqlparse = []
 typing-extensions = []
