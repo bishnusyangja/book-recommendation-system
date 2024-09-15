@@ -7,6 +7,7 @@ from users.models import User
 EMAIL = 'abc@gmail.com'
 PASSWD = 'random_string@$&123'
 
+
 class APITokenTestCase(TestCase):
     client = APIClient()
     url = '/api/token/'
