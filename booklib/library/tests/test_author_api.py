@@ -49,7 +49,7 @@ class AuthorAPIAdminUserTestCase(TestCase):
     def test_author_delete_api(self):
         author = baker.make(Author, name='jpt boy')
         self.assertEqual(Author.objects.filter(is_deleted=False).count(), 1)
-        resp = self.client.delete(f'{self.url}{author.uuid}/', headers=self.get_headers())
+        resp = self.client.delete(f'{self.url}{str(author.uuid)}/', headers=self.get_headers())
         self.assertEqual(resp.status_code, 204)
         self.assertEqual(Author.objects.filter(is_deleted=False).count(), 0)
         self.assertEqual(Author.objects.filter(is_deleted=True).count(), 1)
@@ -57,7 +57,7 @@ class AuthorAPIAdminUserTestCase(TestCase):
     def test_author_put_api(self):
         author = baker.make(Author, name="random name")
         data = {'name': "new boy name", 'description': 'Hello guys'}
-        resp = self.client.put(f'{self.url}{author.uuid}/', data=data, content_type='application/json', headers=self.get_headers())
+        resp = self.client.put(f'{self.url}{str(author.uuid)}/', data=data, content_type='application/json', headers=self.get_headers())
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.json()['name'], data['name'])
         self.assertEqual(resp.json()['description'], data['description'])
@@ -65,7 +65,7 @@ class AuthorAPIAdminUserTestCase(TestCase):
     def test_author_patch_api(self):
         author = baker.make(Author, name="random name")
         data = {'name': "new boy name", 'description': 'Hello guys'}
-        resp = self.client.patch(f'{self.url}{author.uuid}/', data=data, content_type='application/json',
+        resp = self.client.patch(f'{self.url}{str(author.uuid)}/', data=data, content_type='application/json',
                                headers=self.get_headers())
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.json()['name'], data['name'])

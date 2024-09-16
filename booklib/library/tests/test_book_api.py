@@ -37,18 +37,18 @@ class BookAPINormalUserTestCase(TestCase):
     def test_book_put_api_by_normal_user(self):
         book = baker.make(Book)
         data = {'name': 'Old is Gold'}
-        resp = self.client.put(f'{self.url}{book.uuid}/', data=data, content_type='application/json', headers=self.get_headers())
+        resp = self.client.put(f'{self.url}{str(book.uuid)}/', data=data, content_type='application/json', headers=self.get_headers())
         self.assertEqual(resp.status_code, 403)
 
     def test_book_patch_api_by_normal_user(self):
         book = baker.make(Book)
         data = {'name': 'Old is Gold'}
-        resp = self.client.patch(f'{self.url}{book.uuid}/', data=data, content_type='application/json', headers=self.get_headers())
+        resp = self.client.patch(f'{self.url}{str(book.uuid)}/', data=data, content_type='application/json', headers=self.get_headers())
         self.assertEqual(resp.status_code, 403)
 
     def test_book_delete_api_by_normal_user(self):
         book = baker.make(Book)
-        resp = self.client.delete(f'{self.url}{book.uuid}/', content_type='application/json', headers=self.get_headers())
+        resp = self.client.delete(f'{self.url}{str(book.uuid)}/', content_type='application/json', headers=self.get_headers())
         self.assertEqual(resp.status_code, 403)
 
     def test_book_list_api(self):
@@ -121,13 +121,13 @@ class BookAPIAdminUserTestCase(TestCase):
     def test_book_put_api_with_empty_data(self):
         book = baker.make(Book)
         data = {}
-        resp = self.client.put(f'{self.url}{book.uuid}/', data=data, content_type='application/json', headers=self.get_headers())
+        resp = self.client.put(f'{self.url}{str(book.uuid)}/', data=data, content_type='application/json', headers=self.get_headers())
         self.assertEqual(resp.status_code, 400)
 
     def test_book_patch_api_with_data(self):
         book = baker.make(Book)
         data = {'title': 'This is new Book Released'}
-        resp = self.client.patch(f'{self.url}{book.uuid}/', data=data, content_type='application/json', headers=self.get_headers())
+        resp = self.client.patch(f'{self.url}{str(book.uuid)}/', data=data, content_type='application/json', headers=self.get_headers())
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.json()['title'], data['title'])
 
@@ -135,7 +135,7 @@ class BookAPIAdminUserTestCase(TestCase):
         book = baker.make(Book)
         book_count = Book.objects.filter(is_deleted=False).count()
         self.assertEqual(book_count, 1)
-        resp = self.client.delete(f'{self.url}{book.uuid}/', headers=self.get_headers())
+        resp = self.client.delete(f'{self.url}{str(book.uuid)}/', headers=self.get_headers())
         self.assertEqual(resp.status_code, 204)
         book_count = Book.objects.filter(is_deleted=False).count()
         self.assertEqual(book_count, 0)
@@ -144,7 +144,7 @@ class BookAPIAdminUserTestCase(TestCase):
         author = baker.make(Author)
         book = baker.make(Book, title='abc')
         data = {'title': 'XYZ', 'description': 'Welcome drinks', 'published_on': '2012-05-27', 'author': [author.uuid]}
-        resp = self.client.put(f'{self.url}{book.uuid}/', data=data, content_type='application/json', headers=self.get_headers())
+        resp = self.client.put(f'{self.url}{str(book.uuid)}/', data=data, content_type='application/json', headers=self.get_headers())
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.json()['title'], data['title'])
         self.assertEqual(resp.json()['description'], data['description'])

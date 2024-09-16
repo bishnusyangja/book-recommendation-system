@@ -2,6 +2,8 @@ import uuid
 from django.db import models
 from django.utils import timezone
 
+from users.models import User
+
 
 class BaseModel(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, db_index=True)
@@ -21,7 +23,6 @@ class BaseModel(models.Model):
         self.is_deleted = True
         self.deleted_on = timezone.now()
         self.save()
-
 
 
 class Author(BaseModel):
@@ -49,3 +50,17 @@ class Book(BaseModel):
 
     def author_list(self):
         return [auth.name for auth in self.author.all()]
+
+
+class FavoriteBooks(BaseModel):
+    user = models.ForeignKey(User, related_name='favorite_books', on_delete=models.PROTECT)
+    book = models.ForeignKey(Book, related_name='users_interested_in', on_delete=models.PROTECT)
+    description = models.TextField()
+
+    def __str__(self):
+        return f"{self.user.get_full_name()} - {self.book.title}"
+
+    class Meta:
+        ordering = ("pk",)
+
+

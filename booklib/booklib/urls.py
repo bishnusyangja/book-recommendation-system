@@ -18,12 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from library.views import AuthorAPI, BookAPI
+from library.views import AuthorAPI, BookAPI, FavoriteBookAPI
 from users.views import UserRegisterAPIView
 
 router = DefaultRouter()
 router.register(r'books', BookAPI)
 router.register(r'authors', AuthorAPI)
+router.register(r'fav-book', FavoriteBookAPI)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
