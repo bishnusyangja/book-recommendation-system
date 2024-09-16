@@ -2,11 +2,13 @@ from django.db.models import Q
 from rest_framework import status
 from library.models import Book, Author, FavoriteBooks
 from library.permissions import AdminWritePermission
-from library.recommendation import get_recommended_books
+from library.recommendation import get_recommended_book_query
 from library.serializers import BookSerializer, AuthorSerializer, FavoriteBookSerializer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from library.tasks import saving_cosine_similarity
 
+RECOMMENDED_BOOK_MAX = 5
 
 class BookAPI(ModelViewSet):
     serializer_class = BookSerializer
@@ -20,6 +22,14 @@ class BookAPI(ModelViewSet):
         if search:
             qs = qs.filter(Q(title__icontains=search) | Q(author__name__icontains=search))
         return qs
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        if response.status_code == status.HTTP_201_CREATED:
+            book_uuid = response.data.get('uuid')
+            book_id = Book.objects.get(uuid=book_uuid).id
+            saving_cosine_similarity.delay(book_id)
+        return response
 
 
 class AuthorAPI(ModelViewSet):
@@ -53,6 +63,7 @@ class FavoriteBookAPI(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
-        if response.status == status.HTTP_201_CREATED:
-            response.data['recommended'] = get_recommended_books()
+        if response.status_code == status.HTTP_201_CREATED:
+            response.data['recommended'] = BookSerializer(get_recommended_book_query(
+                                                request.user.id, RECOMMENDED_BOOK_MAX), many=True)
         return response

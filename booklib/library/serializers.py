@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from library.models import Book, Author, FavoriteBooks
-from users.models import User
-from users.serializers import UserSerializer
 
 MAX_FAV_LIST = 20
 
