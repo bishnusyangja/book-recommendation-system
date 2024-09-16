@@ -64,3 +64,10 @@ class FavoriteBooks(BaseModel):
         ordering = ("pk",)
 
 
+class SimilarityMatrix(models.Model):
+    small_book_id = models.ForeignKey(Book, related_name='similarity_matrix', on_delete=models.PROTECT)
+    large_book_id = models.ForeignKey(Book, related_name='similarity_matrix_2', on_delete=models.PROTECT)
+    similarity = models.FloatField(db_index=True)
+
+    class Meta:
+        ordering = ("pk", )
