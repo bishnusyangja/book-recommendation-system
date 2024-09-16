@@ -62,6 +62,14 @@ python-jose = ["python-jose (==3.3.0)"]
 crypto = ["cryptography (>=3.3.1)"]
 
 [[package]]
+name = "joblib"
+version = "1.4.2"
+description = "Lightweight pipelining with Python functions"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "model-bakery"
 version = "1.19.5"
 description = "Smart object creation facility for Django."
@@ -75,6 +83,14 @@ django = ">=4.2"
 [package.extras]
 docs = ["myst-parser", "sphinx", "sphinx-rtd-theme"]
 test = ["black", "coverage", "mypy", "pillow", "pytest", "pytest-django", "ruff"]
+
+[[package]]
+name = "numpy"
+version = "2.1.1"
+description = "Fundamental package for array computing in Python"
+category = "main"
+optional = false
+python-versions = ">=3.10"
 
 [[package]]
 name = "pyjwt"
@@ -91,6 +107,45 @@ docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
 tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
 
 [[package]]
+name = "scikit-learn"
+version = "1.5.2"
+description = "A set of python modules for machine learning and data mining"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+joblib = ">=1.2.0"
+numpy = ">=1.19.5"
+scipy = ">=1.6.0"
+threadpoolctl = ">=3.1.0"
+
+[package.extras]
+build = ["numpy (>=1.19.5)", "scipy (>=1.6.0)", "cython (>=3.0.10)", "meson-python (>=0.16.0)"]
+install = ["numpy (>=1.19.5)", "scipy (>=1.6.0)", "joblib (>=1.2.0)", "threadpoolctl (>=3.1.0)"]
+benchmark = ["matplotlib (>=3.3.4)", "pandas (>=1.1.5)", "memory_profiler (>=0.57.0)"]
+docs = ["matplotlib (>=3.3.4)", "scikit-image (>=0.17.2)", "pandas (>=1.1.5)", "seaborn (>=0.9.0)", "memory_profiler (>=0.57.0)", "sphinx (>=7.3.7)", "sphinx-copybutton (>=0.5.2)", "sphinx-gallery (>=0.16.0)", "numpydoc (>=1.2.0)", "Pillow (>=7.1.2)", "pooch (>=1.6.0)", "sphinx-prompt (>=1.4.0)", "sphinxext-opengraph (>=0.9.1)", "plotly (>=5.14.0)", "polars (>=0.20.30)", "sphinx-design (>=0.5.0)", "sphinx-design (>=0.6.0)", "sphinxcontrib-sass (>=0.3.4)", "pydata-sphinx-theme (>=0.15.3)", "sphinx-remove-toctrees (>=1.0.0.post1)"]
+examples = ["matplotlib (>=3.3.4)", "scikit-image (>=0.17.2)", "pandas (>=1.1.5)", "seaborn (>=0.9.0)", "pooch (>=1.6.0)", "plotly (>=5.14.0)"]
+tests = ["matplotlib (>=3.3.4)", "scikit-image (>=0.17.2)", "pandas (>=1.1.5)", "pytest (>=7.1.2)", "pytest-cov (>=2.9.0)", "ruff (>=0.2.1)", "black (>=24.3.0)", "mypy (>=1.9)", "pyamg (>=4.0.0)", "polars (>=0.20.30)", "pyarrow (>=12.0.0)", "numpydoc (>=1.2.0)", "pooch (>=1.6.0)"]
+maintenance = ["conda-lock (==2.5.6)"]
+
+[[package]]
+name = "scipy"
+version = "1.14.1"
+description = "Fundamental algorithms for scientific computing in Python"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[package.dependencies]
+numpy = ">=1.23.5,<2.3"
+
+[package.extras]
+test = ["pytest", "pytest-cov", "pytest-timeout", "pytest-xdist", "asv", "mpmath", "gmpy2", "threadpoolctl", "scikit-umfpack", "pooch", "hypothesis (>=6.30)", "array-api-strict (>=2.0)", "cython", "meson", "ninja"]
+doc = ["sphinx (>=5.0.0,<=7.3.7)", "pydata-sphinx-theme (>=0.15.2)", "sphinx-design (>=0.4.0)", "matplotlib (>=3.5)", "numpydoc", "jupytext", "myst-nb", "pooch", "jupyterlite-sphinx (>=0.13.1)", "jupyterlite-pyodide-kernel"]
+dev = ["mypy (==1.10.0)", "typing-extensions", "types-psutil", "pycodestyle", "ruff (>=0.0.292)", "cython-lint (>=0.12.2)", "rich-click", "doit (>=0.36.0)", "pydevtool"]
+
+[[package]]
 name = "sqlparse"
 version = "0.5.1"
 description = "A non-validating SQL parser."
@@ -101,6 +156,14 @@ python-versions = ">=3.8"
 [package.extras]
 dev = ["build", "hatch"]
 doc = ["sphinx"]
+
+[[package]]
+name = "threadpoolctl"
+version = "3.5.0"
+description = "threadpoolctl"
+category = "main"
+optional = false
+python-versions = ">=3.8"
 
 [[package]]
 name = "typing-extensions"
@@ -121,15 +184,20 @@ python-versions = ">=2"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "74bd5994194b0c78b3b4dda01c03b370d3fce952f1698decba399badeb3c49ef"
+content-hash = "bc84b57b5822492a24c00604c4325350fa943f4266641a4e6148ba000ec256bf"
 
 [metadata.files]
 asgiref = []
 django = []
 djangorestframework = []
 djangorestframework-simplejwt = []
+joblib = []
 model-bakery = []
+numpy = []
 pyjwt = []
+scikit-learn = []
+scipy = []
 sqlparse = []
+threadpoolctl = []
 typing-extensions = []
 tzdata = []
