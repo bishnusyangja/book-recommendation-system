@@ -10,6 +10,7 @@ from library.tasks import saving_cosine_similarity
 
 RECOMMENDED_BOOK_MAX = 5
 
+
 class BookAPI(ModelViewSet):
     serializer_class = BookSerializer
     permission_classes = (IsAuthenticated, AdminWritePermission)
@@ -64,6 +65,6 @@ class FavoriteBookAPI(ModelViewSet):
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
         if response.status_code == status.HTTP_201_CREATED:
-            response.data['recommended'] = BookSerializer(get_recommended_book_query(
-                                                request.user.id, RECOMMENDED_BOOK_MAX), many=True)
+            response.data['recommended_books'] = BookSerializer(get_recommended_book_query(
+                                                request.user.id, RECOMMENDED_BOOK_MAX), many=True).data
         return response
