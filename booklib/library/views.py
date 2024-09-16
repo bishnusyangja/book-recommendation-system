@@ -1,6 +1,8 @@
 from django.db.models import Q
+from rest_framework import status
 from library.models import Book, Author, FavoriteBooks
 from library.permissions import AdminWritePermission
+from library.recommendation import get_recommended_books
 from library.serializers import BookSerializer, AuthorSerializer, FavoriteBookSerializer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
@@ -49,5 +51,8 @@ class FavoriteBookAPI(ModelViewSet):
         ctx.update({'user': self.request.user})
         return ctx
 
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        if response.status == status.HTTP_201_CREATED:
+            response.data['recommended'] = get_recommended_books()
+        return response

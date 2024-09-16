@@ -7,3 +7,8 @@ def find_similarity(title_1, title_2):
     tfidf_matrix = vectorizer.fit_transform([title_1, title_2])
     cosine_sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])
     return "{:.2f}".format(cosine_sim[0][0])
+
+
+def get_recommended_books():
+    result = []
+    return result
