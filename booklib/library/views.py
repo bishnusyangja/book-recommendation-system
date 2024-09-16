@@ -13,7 +13,7 @@ class BookAPI(ModelViewSet):
     lookup_field = 'uuid'
 
     def get_queryset(self):
-        qs = self.queryset
+        qs = Book.objects.all()
         search = self.request.query_params.get('search')
         if search:
             qs = qs.filter(Q(name__icontains=search) | Q(author__name__icontains=search))

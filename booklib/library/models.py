@@ -40,3 +40,6 @@ class Book(BaseModel):
 
     class Meta:
         ordering = ("pk",)
+
+    def author_list(self):
+        return [auth.name for auth in self.author.all()]

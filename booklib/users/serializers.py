@@ -21,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'password': 'password confirmation doesnot match'})
         return attrs
 
+
     def create(self, validated_data):
         validated_data.pop('confirm_password')
         password = validated_data.pop('password', None)
