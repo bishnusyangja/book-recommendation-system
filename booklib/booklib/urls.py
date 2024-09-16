@@ -22,8 +22,8 @@ from library.views import AuthorAPI, BookAPI
 from users.views import UserRegisterAPIView
 
 router = DefaultRouter()
-router.register(r'book', BookAPI)
-router.register(r'author', AuthorAPI)
+router.register(r'books', BookAPI)
+router.register(r'authors', AuthorAPI)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

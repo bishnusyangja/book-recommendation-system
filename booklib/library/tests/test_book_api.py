@@ -15,7 +15,7 @@ PASSWD = 'random_string@$&123'
 class BookAPINormalUserTestCase(TestCase):
     client = APIClient()
     login_url = '/login/'
-    url = '/book/'
+    url = '/books/'
     access_token = ''
 
     def setUp(self):
@@ -51,11 +51,28 @@ class BookAPINormalUserTestCase(TestCase):
         resp = self.client.delete(f'{self.url}{book.uuid}/', content_type='application/json', headers=self.get_headers())
         self.assertEqual(resp.status_code, 403)
 
+    def test_book_list_api(self):
+        baker.make(Book, _quantity=3)
+        baker.make(Book, _quantity=2)
+        baker.make(Book, _quantity=4)
+        resp = self.client.get(self.url, headers=self.get_headers())
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json()['count'], 9)
+
+    def test_book_search_api(self):
+        baker.make(Book, title='Ram Shrawan is with Sita', _quantity=3)
+        baker.make(Book, title='Santosh and Ram Shrawan are Friends', _quantity=2)
+        baker.make(Book, title='This is not in search', _quantity=4)
+        resp = self.client.get(self.url, query_params={'search': 'ram shraw'}, content_type='application/json',
+                                  headers=self.get_headers())
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json()['count'], 5)
+
 
 class BookAPIAdminUserTestCase(TestCase):
     client = APIClient()
     login_url = '/login/'
-    url = '/book/'
+    url = '/books/'
     access_token = ''
 
     def setUp(self):
@@ -116,11 +133,11 @@ class BookAPIAdminUserTestCase(TestCase):
 
     def test_book_delete_api(self):
         book = baker.make(Book)
-        book_count = Book.objects.all().count()
+        book_count = Book.objects.filter(is_deleted=False).count()
         self.assertEqual(book_count, 1)
         resp = self.client.delete(f'{self.url}{book.uuid}/', headers=self.get_headers())
         self.assertEqual(resp.status_code, 204)
-        book_count = Book.objects.all().count()
+        book_count = Book.objects.filter(is_deleted=False).count()
         self.assertEqual(book_count, 0)
 
     def test_put_api_book_with_updated_data_response(self):
@@ -132,3 +149,9 @@ class BookAPIAdminUserTestCase(TestCase):
         self.assertEqual(resp.json()['title'], data['title'])
         self.assertEqual(resp.json()['description'], data['description'])
         self.assertEqual(resp.json()['published_on'], data['published_on'])
+
+    def test_author_list_api(self):
+        count = 4
+        baker.make(Book, _quantity=count)
+        resp = self.client.get(self.url, headers=self.get_headers())
+        self.assertEqual(resp.json()['count'], count)

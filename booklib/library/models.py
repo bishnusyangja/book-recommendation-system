@@ -17,6 +17,12 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    def delete(self, *args, **kwargs):
+        self.is_deleted = True
+        self.deleted_on = timezone.now()
+        self.save()
+
+
 
 class Author(BaseModel):
     name = models.CharField(max_length=200)

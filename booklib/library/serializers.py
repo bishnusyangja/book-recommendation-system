@@ -24,7 +24,7 @@ class BookSerializer(serializers.ModelSerializer):
         return list(Author.objects.filter(uuid__in=value).values_list('pk', flat=True))
 
     def validate_title(self, value):
-        if Book.objects.filter(title=value.strip()).count() > 0:
+        if Book.objects.filter(title=value.strip(), is_deleted=False).count() > 0:
             raise serializers.ValidationError('The book you want to enter was already in list')
         return value.strip()
 
@@ -37,3 +37,8 @@ class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
         fields = ('uuid', 'name', 'description', 'created_on', 'modified_on')
+
+    def validate_name(self, value):
+        if Author.objects.filter(name=value.strip(), is_deleted=False).count() > 0:
+            raise serializers.ValidationError('The book you want to enter was already in list')
+        return value.strip()
