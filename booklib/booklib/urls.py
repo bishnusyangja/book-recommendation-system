@@ -17,6 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.routers import DefaultRouter
+from library.views import AuthorAPI, BookAPI
+from users.views import UserRegisterAPIView
+
+router = DefaultRouter()
+router.register(r'book', BookAPI)
+router.register(r'author', AuthorAPI)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +31,8 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
+    path('register/', UserRegisterAPIView.as_view(), name='register_user'),
 
 ]
+
+urlpatterns += router.urls

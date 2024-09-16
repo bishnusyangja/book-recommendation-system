@@ -10,6 +10,7 @@ class BookAPI(ModelViewSet):
     serializer_class = BookSerializer
     permission_classes = (IsAuthenticated, AdminWritePermission)
     queryset = Book.objects.none()
+    lookup_field = 'uuid'
 
     def get_queryset(self):
         qs = self.queryset
@@ -23,6 +24,7 @@ class AuthorAPI(ModelViewSet):
     serializer_class = AuthorSerializer
     permission_classes = (IsAuthenticated, AdminWritePermission)
     queryset = Author.objects.none()
+    lookup_field = 'uuid'
 
     def get_queryset(self):
         qs = Author.objects.all()

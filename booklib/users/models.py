@@ -40,9 +40,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    first_name = models.CharField(_('first name'), max_length=30,)
-    last_name = models.CharField(_('last name'), max_length=150, blank=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, db_index=True)
+    first_name = models.CharField(_('first name'), max_length=30)
+    last_name = models.CharField(_('last name'), max_length=150)
     email = models.EmailField(_('email address'), unique=True, validators=[EmailValidator(message='Enter a valid email address')])
     mobile = models.CharField(_('mobile'), max_length=20, blank=True)
     is_staff = models.BooleanField(
@@ -58,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             'Unselect this instead of deleting accounts.'
         ),
     )
-    created_on = models.DateTimeField(_('Created on'), default=timezone.now)
+    created_on = models.DateTimeField(_('Created on'), default=timezone.now, db_index=True)
     modified_on = models.DateTimeField(_('Modified on'))
 
     objects = UserManager()

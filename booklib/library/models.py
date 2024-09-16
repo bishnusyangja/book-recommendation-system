@@ -4,8 +4,8 @@ from django.utils import timezone
 
 
 class BaseModel(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    created_on = models.DateTimeField(default=timezone.now)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, db_index=True)
+    created_on = models.DateTimeField(default=timezone.now, db_index=True)
     modified_on = models.DateTimeField(default=None, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     deleted_on = models.DateTimeField(default=None, null=True)
@@ -16,7 +16,6 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ("pk", )
 
 
 class Author(BaseModel):
@@ -26,8 +25,11 @@ class Author(BaseModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ("pk",)
 
-class Book(models.Model):
+
+class Book(BaseModel):
     title = models.CharField(max_length=200)
     published_on = models.DateField(default=None, blank=True, null=True)
     description = models.TextField()
@@ -35,3 +37,6 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ("pk",)
